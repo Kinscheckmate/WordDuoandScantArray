@@ -61,11 +61,18 @@ public class ScantArray {
      * Precondition:  0 <= col < getNumColumns()
      */
     public void removeColumn(int col){
-        /* part b */
-        
-		
-		
-		
+        for(int i = entries.size()-1; i >= 0; i--)
+        {
+            if (entries.get(i).getColumn() == col) {
+                entries.remove(i);
+            }
+            else if (entries.get(i).getColumn() > col)
+            {
+                ScantArrayEntry temp = new ScantArrayEntry(entries.get(i).getRow(), entries.get(i).getColumn()-1, entries.get(i).getValue());
+                entries.set(i, temp);
+            }
+        }
+        numColumns--;
     }
 
     /** Allows the ScantArray to be printed.  The
@@ -78,12 +85,25 @@ public class ScantArray {
      * @return
      */
     public String toString(){
-        /* part c */
         String s = "";
+        String temp = "";
+        for(int r = 0; r < numRows; r++)
+        {
+            for(int c = 0; c < numColumns; c++)
+            {
+                temp = "0 ";
+                for(int i = entries.size()-1; i >= 0; i--)
+                {
+                    if (entries.get(i).getColumn() == c && entries.get(i).getRow() == r)
+                    {
+                        temp = entries.get(i).getValue() + " ";
+                    }
+                }
+                s += temp;
+            }
+            s += "\n";
+        }
 
-        
-		
-		
         return s;
     }
 
@@ -105,7 +125,27 @@ public class ScantArray {
         sa1.removeColumn(1);
         System.out.println(sa1);
 
-        /******* please add one more test of your own *******/
+        System.out.println("\n SCANT ARRAY 2 \n");
+
+        ScantArray sa2 = new ScantArray(7,3);
+        sa2.addEntry(6,2,17);
+        sa2.addEntry(4,0,32);
+        sa2.addEntry(3,2,-90);
+        sa2.addEntry(0,0,-2);
+        sa2.addEntry(1,1,8);
+        sa2.addEntry(3,1,6);
+
+        System.out.println(sa2.getValueAt(6,2));
+        System.out.println(sa2.getValueAt(1,1));
+        System.out.println(sa2.getValueAt(3,2));
+        System.out.println("rows "+ sa2.getNumRows());
+        System.out.println("columns "+ sa2.getNumColumns());
+
+        System.out.println(sa2);
+
+        sa2.removeColumn(1);
+        System.out.println(sa2);
+
     }
 }
 
